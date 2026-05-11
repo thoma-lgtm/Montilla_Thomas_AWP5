@@ -3,7 +3,7 @@ const username = document.getElementById('username');
 const email = document.getElementById('email');
 const password = document.getElementById('password');
 const password2 = document.getElementById('password2');
-const edad = document.getElementById('age');
+const age = document.getElementById('age');
 
 //Inicio de las funciones
 //Linea de error (Solo cambia el color)
@@ -46,9 +46,10 @@ function checkRequired(inputArr){
 function checkPasswordsMatch(input1, input2){
     if(input1.value !== input2.value){
         showError(input2, 'Passwords do not match');
+    } else {
+        showSuccess(input2);
     }
 }
-
 
 //Para poner el nombre en el mansaje de error
 function getFieldName(input){
@@ -61,14 +62,48 @@ function checkLength(input, min, max){
         showError(input, `${getFieldName(input)} must be at least ${min} characters`);
     }else if(input.value.length > max){
         showError(input, `${getFieldName(input)} must be at less than ${max} characters`);
+    } else{
+        showSuccess(input);
     }
 }
 
 function checkAge(input, min, max){
-    if(input <= min && input >= max){
+    const value = parseInt(input.value.trim()); //esto es necesario para pasar el texto a un numero entero,
+
+    if(isNaN(value)){ //tambien es necesario para que marque error si no una letra dara success
+        showError(input, 'Age must be a number');
+    } else if(value < min || value > max){
+        showError(input, `${getFieldName(input)} not valid`);
+    } else {
         showSuccess(input);
+    }
+}
+
+//validar caracteres de contraseña
+//https://www.youtube.com/watch?v=2vP9pTSFp3A
+function validarPassword(input){
+    const longitudMinima = /^.{8,}$/;
+    const tieneMayuscila = /[A-Z]/;
+    const tieneMinuscula = /[a-z]/;
+    const tieneNumero = /\d/;
+    const tieneEspecial = /[`~!@#$%^&*()_+\-={}\[\]|\\:";'<>?,./]/; //Se ponen barritas para evitar problemas con los corchos []
+
+    if(!longitudMinima.test(input)){
+        showError(input, `The password must be at least 8 characters.`)
+    }
+    if(!tieneMayuscila.test(input)){
+        showError(input, `The password must contain at least one uppercase letter.`)
+    }
+    if(!tieneMinuscula.test(input)){
+        showError(input, `The password must contain at least one lowercase letter`)
+    }
+    if(!tieneNumero.test(input)){
+        showError(input, `The password must contain at least one number`)
+    }
+    if(!tieneEspecial.test(input)){
+        showError(input, `The password must contain at least one special character`)
     } else{
-        showSuccess(input, `${getFieldName(input)} not valid`);
+        showSuccess(input);
     }
 }
 
@@ -78,11 +113,11 @@ form.addEventListener('submit', function(e){
 
     checkRequired([username, email, password, password2, age]);
     checkLength(username, 3, 15);
-    checkLength(password, 6, 25);
+    validarPassword(password);
     checkAge(age, 1, 1000);
     checkEmail(email);
-    checkPasswordsMatch(password, password2);
-/*
+    checkPasswordsMatch(password, password2); //si no se pone nada en las contraseñas, y se presina el boton submit
+/*                                              //la segunda contraseña se marcara como completa
     if(username.value.trim() === '') {
         showError(username,'El nombre de usuario es requerido');
     } else {
