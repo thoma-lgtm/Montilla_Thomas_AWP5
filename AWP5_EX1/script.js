@@ -44,7 +44,9 @@ function checkRequired(inputArr){
 
 //Mach de las contraseñas
 function checkPasswordsMatch(input1, input2){
-    if(input1.value !== input2.value){
+    if(input1.value === '' || input2.value === ''){
+        showError(input2, 'Password invalid')
+    } else if(input1.value !== input2.value){
         showError(input2, 'Passwords do not match');
     } else {
         showSuccess(input2);
@@ -88,20 +90,16 @@ function validarPassword(input){
     const tieneNumero = /\d/;
     const tieneEspecial = /[`~!@#$%^&*()_+\-={}\[\]|\\:";'<>?,./]/; //Se ponen barritas para evitar problemas con los corchos []
 
-    if(!longitudMinima.test(input)){
-        showError(input, `The password must be at least 8 characters.`)
-    }
-    if(!tieneMayuscila.test(input)){
-        showError(input, `The password must contain at least one uppercase letter.`)
-    }
-    if(!tieneMinuscula.test(input)){
-        showError(input, `The password must contain at least one lowercase letter`)
-    }
-    if(!tieneNumero.test(input)){
-        showError(input, `The password must contain at least one number`)
-    }
-    if(!tieneEspecial.test(input)){
-        showError(input, `The password must contain at least one special character`)
+    if(!longitudMinima.test(input.value)){
+        showError(input, `Must be at least 8 characters.`)
+    } else if(!tieneMayuscila.test(input.value)){
+        showError(input, `Must contain at least one uppercase letter.`)
+    } else if(!tieneMinuscula.test(input.value)){
+        showError(input, `Must contain at least one lowercase letter`)
+    } else if(!tieneNumero.test(input.value)){
+        showError(input, `Must contain at least one number`)
+    } else if(!tieneEspecial.test(input.value)){
+        showError(input, `Must contain at least one special character`)
     } else{
         showSuccess(input);
     }
