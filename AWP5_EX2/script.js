@@ -12,6 +12,9 @@ function calculate() {
     const currency_one = currencyEl_one.value;
     const currency_two = currencyEl_two.value;
 
+// Missatge d'espera
+    rateEl.innerText = 'Carregant tipus de canvi...';
+
     fetch(`https://api.exchangerate-api.com/v4/latest/${currency_one}`)
         .then(res => res.json())
         .then(data => {
@@ -20,6 +23,10 @@ function calculate() {
             rateEl.innerText = `1 ${currency_one} = ${rate} ${currency_two}`;
 
             amountEl_two.value = (amountEl_one.value * rate).toFixed(2);
+        })
+        .catch(error => {
+            console.error(error);
+            rateEl.innerText = 'Error en obtenir les dades'; //Como pruebo si esto funciona¿
         });
 }
 
