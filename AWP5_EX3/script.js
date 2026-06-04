@@ -66,5 +66,11 @@ container.addEventListener('click', e => {
     }
 });
 
+//moneyyyy 🤑
+
+const moneySelect = document.getElementById('money');
+
+
+
 //Total set
 updateSelectedCount();

@@ -33,14 +33,14 @@ body{
 }
 
 .container{
-    perspective: 1000px;
+    perspective: 200px;
     margin-bottom: 30px;
 }
 
 .seat{
     background-color: #444451;
-    height: 12px;
-    width: 15px;
+    height: 18px;
+    width: 21px;
     margin: 3px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
@@ -112,4 +112,8 @@ p.text{
 
 p.text span{
     color: #6feaf6;
+}
+
+.money-conteiner{
+    padding: 0 0 30px;
 }
